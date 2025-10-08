@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather Forecast</title>
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to bottom right, #87CEFA, #f0f8ff);
+        text-align: center;
+        padding: 50px;
+        margin: 0;
+      }
+
+      h1 {
+        color: #333;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+
+      form {
+        background-color: white;
+        display: inline-block;
+        padding: 30px 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      }
+
+      label {
+        font-size: 1.2em;
+        color: #555;
+      }
+
+      input[type="text"] {
+        margin-top: 10px;
+        padding: 10px;
+        width: 300px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+      }
+
+      input[type="submit"] {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #0078D7;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #005fa3;
+      }
+
+      p {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      .alert {
+        color: red;
+        font-size: 1.1em;
+      }
+
+      footer {
+        margin-top: 50px;
+        color: #666;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>🌤️ Weather Forecast</h1>
+
+    <%= form_with url: forecasts_path, method: :post, local: true do %>
+      <%= label_tag :address, "Enter Address" %><br>
+      <%= text_field_tag :address, nil, placeholder: "e.g., New York, NY" %><br>
+      <%= submit_tag "Get Forecast" %>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <p class="alert"><%= flash[:alert] %></p>
+    <% end %>
+  </body>
+</html>

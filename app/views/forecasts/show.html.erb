@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather Forecast</title>
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+        text-align: center;
+        padding: 40px;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 2.4em;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        color: #444;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 8px;
+      }
+
+      p {
+        font-size: 1.1em;
+        margin: 5px 0 20px 0;
+      }
+
+      .cached {
+        color: green;
+        font-weight: bold;
+      }
+
+      .fresh {
+        color: #0078D7;
+        font-weight: bold;
+      }
+
+      /* Card styling */
+      .weather-card {
+        display: inline-block;
+        background: #fff;
+        padding: 30px 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        text-align: left;
+        margin-top: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .weather-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        padding: 8px 0;
+        font-size: 1.1em;
+        color: #555;
+      }
+
+      img {
+        vertical-align: middle;
+        margin-right: 8px;
+        border-radius: 10px;
+      }
+
+      /* Link button styling */
+      a {
+        display: inline-block;
+        margin-top: 25px;
+        background-color: #0078D7;
+        color: white;
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      a:hover {
+        background-color: #005fa3;
+        transform: scale(1.05);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      }
+
+      footer {
+        margin-top: 40px;
+        color: #666;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>🌦️ Forecast for <%= @forecast['name'] %></h1>
+
+    <% if @cached %>
+      <p class="cached">Pulled from cache (cached for 30 minutes)</p>
+    <% else %>
+      <p class="fresh">Fresh data retrieved from API</p>
+    <% end %>
+
+    <div class="weather-card">
+      <h2>Current Weather</h2>
+      <ul>
+        <li>🌡️ <b>Current Temperature:</b> <%= @forecast['main']['temp'] %>°C</li>
+        <li>🌤️ <b>Minimum Temperature:</b> <%= @forecast['main']['temp_min'] %>°C</li>
+        <li>☀️ <b>Maximum Temperature:</b> <%= @forecast['main']['temp_max'] %>°C</li>
+        <li>💧 <b>Humidity:</b> <%= @forecast['main']['humidity'] %>%</li>
+        <li>🤗 <b>Feels Like:</b> <%= @forecast['main']['feels_like'] %>°C</li>
+        <li>
+          🌈 <b>Condition:</b>
+          <%= image_tag "https://openweathermap.org/img/wn/#{@forecast['weather'][0]['icon']}@2x.png", alt: "Weather Icon" %>
+          <%= @forecast['weather'][0]['description'].capitalize %>
+        </li>
+      </ul>
+    </div>
+    <ul>
+      <%= link_to "🔍 Search Another Location", root_path %>
+    </ul>
+  </body>
+</html>
